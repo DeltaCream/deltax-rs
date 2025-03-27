@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+/* body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #333;
+    line-height: 1.6;
+    text-align: center;
+    background-image: url('/assets/aerina.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: multiply;
+    animation: fadeIn 2s ease-in-out;
+    animation-fill-mode: forwards;
+    opacity: 0;
+}
+
+:root {
+    --primary-color: #f0f0f0;
+    --secondary-color: #333;
+    --accent-color: #ff0000;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --danger-color: #dc3545;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --link-color: #007bff;
+    --link-hover-color: #0056b3;
+    --link-active-color: #0056b3;
+    --link-visited-color: #0056b3;
+    --link-text-decoration: none;
+    --link-hover-text-decoration: underline;
+    --link-active-text-decoration: underline;
+    --link-visited-text-decoration: underline;
+    --link-text-transform: none;
+    --link-hover-text-transform: none;
+    --link-active-text-transform: none;
+    --link-visited-text-transform: none;
+    --link-text-align: center;
+    --link-hover-text-align: center;
+    --link-active-text-align: center;
+    --link-visited-text-align: center;
+    --link-text-indent: 0;
+    --font-size: 1rem;
+    --font-weight: 400;
+    --font-style: normal;
+    --font-family: 'Roboto', sans-serif;
+    --line-height: 1.5;
+    --text-transform: none;
+    --text-align: center;
+    --text-indent: 0;
+    --text-decoration: none;
+    --letter-spacing: normal;
+    --word-spacing: normal;
+    --text-shadow: none;
+    --text-overflow: clip;
+    --white-space: normal;
+    --vertical-align: baseline;
+    --color: #333;
+    --background-color: #f0f0f0;
+    --background-image: none;
+    --background-size: cover;
+    --background-repeat: no-repeat;
+    --background-position: center;
+    --background-attachment: fixed;
+    --background-blend-mode: normal;
+} */

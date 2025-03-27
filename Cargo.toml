@@ -1,0 +1,33 @@
+[package]
+name = "deltax-rs"
+version = "0.1.0"
+edition = "2024"
+
+# target = "wasm32-unknown-unknown"
+# build-script = "build.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = "0.8.1"
+# leptos = "0.7.8"
+tokio = { version = "1.42.0", features = ["full"] }
+tower = "0.5.2"
+tower-http = { version = "0.6.2", features = ["fs"] }
+tracing = "0.1.40" # Application-level tracing for Rust.
+# trunk = { version = "0.21.9", features = ["tailwindcss"] }
+
+# Utilities for implementing and composing `tracing` subscribers. 
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] } 
+
+[[bin]]
+name = "deltax"
+path = "src/main.rs"
+
+# [package.metadata.leptos]
+# The name used by wasm-bindgen/cargo-leptos for the JS/WASM bundle. Defaults to the crate name
+# output-name = "deltax-rs"  # Note this value here!!
+
+# Activates the tailwind build
+# tailwind-input-file = "style/tailwind.css"
+# tailwind-config-file = "tailwind.config.js"
