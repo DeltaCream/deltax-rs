@@ -99,40 +99,6 @@
 # # Set the command to run the application
 # CMD ["/bin/server"]
 
-#########
-
-# syntax=docker/dockerfile:1
-
-# Base stage for building the application
-# FROM rust:1.85.0-alpine AS builder
-# WORKDIR /app
-
-# # Install build dependencies
-# RUN apk add --no-cache musl-dev
-
-# # Copy source code and manifest files
-# COPY Cargo.toml Cargo.lock ./
-# COPY src ./src
-
-# # Build the application in release mode
-# RUN cargo build --release
-
-# # Production stage with minimal runtime environment
-# FROM alpine:3.18 AS runtime
-# WORKDIR /app
-
-# # Install necessary runtime dependencies
-# RUN apk add --no-cache libgcc
-
-# # Copy the compiled binary from the builder stage
-# COPY --from=builder /app/target/release/deltax /app/deltax
-
-# # Expose the application port
-# EXPOSE 8080
-
-# # Command to run the application
-# CMD ["./deltax"]
-
 ######### border
 
 # Declare APP_NAME before any FROM instruction
@@ -143,13 +109,7 @@ ARG RUST_VERSION=1.85.0
 FROM rust:${RUST_VERSION}-alpine AS base
 
 # Set environment variables
-ENV PATH="/usr/local/cargo/bin:${PATH}"
-
-# Install cargo
-# RUN apk add --no-cache cargo
-
-# Copy cargo executable to the final stage
-# COPY --from=base /usr/bin/cargo /usr/bin/cargo
+# ENV PATH="/usr/local/cargo/bin:${PATH}"
 
 WORKDIR /app
 
@@ -220,7 +180,6 @@ COPY --from=build /app/target/debug/${APP_NAME} /bin/server
 COPY --from=build /app/static ./static
 
 # Grant permissions after copying binary (you need to do this as root *before* switching to the non-privileged user)
-# RUN chown appuser:appuser /bin/server
 RUN chmod +x /bin/server
 
 # Switch to the non-privileged user

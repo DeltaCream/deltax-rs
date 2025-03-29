@@ -7,6 +7,7 @@
 # You can add other services your application may depend on here, such as a
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
+
 # services:
 #   server:
 #     build:
@@ -15,6 +16,7 @@
 #       args:
 #         APP_NAME: ${APP_NAME}
 #         APP_VERSION: ${APP_VERSION} # to be modified in a future version
+#       container_name: "deltax"
 #     image: deltax
 #     ports:
 #       - 8080:8080
@@ -52,15 +54,14 @@ services:
         ports:
             - "3000:3000"
         environment:
-        - NODE_ENV=development
-        - WATCHPACK_POLLING=true
+            - NODE_ENV=development
+            - WATCHPACK_POLLING=true
         volumes:
             - ./frontend:/app
             - /app/node_modules
         command: ["npm", "run", "dev"]
         depends_on:
             - backend
-
 #     db:
 #         image: postgres:15
 #         container_name: postgres-db
@@ -76,20 +77,6 @@ services:
 
 # volumes:
 #   db-data:
-
-# services:
-#   app:
-#     build:
-#       context: .
-#     container_name: "deltax"
-#     volumes:
-#       - .:/app
-#     ports:
-#       - "8080:8080"
-#     environment:
-#       - RUST_BACKTRACE=1
-#     # command: sh -c "cargo watch -x run"
-#     command: [cargo, watch, -x, run]
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
@@ -123,4 +110,3 @@ services:
 # secrets:
 #   db-password:
 #     file: db/password.txt
-
