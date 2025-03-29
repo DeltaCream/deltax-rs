@@ -50,3 +50,28 @@ yarn-error.log*
 # Code workspace on Visual Studio Code
 .vscode/
 *.code-workspace
+
+# IDE-specific files
+.idea/
+*.iml
+
+# Node.js-specific files
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+
+# Rust-specific files
+.cargo/
+
+# Build artifacts
+dist/
+.cache/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Docker-specific
+.dockerignore
+docker-compose.override.yml

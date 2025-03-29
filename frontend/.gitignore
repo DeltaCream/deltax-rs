@@ -30,8 +30,16 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# Log files
+*.log
+
 # env files (can opt-in for committing if needed)
 .env*
+
+# Extra env files to ignore
+.env.local
+.env.development.local
+.env.production.local
 
 # vercel
 .vercel
@@ -39,3 +47,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Build artifacts
+.cache/
+dist/
+
+# Editor-specific Files
+.idea/
+*.iml
