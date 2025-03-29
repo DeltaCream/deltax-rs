@@ -1,8 +1,13 @@
 // mod app;
 use axum::{Router, routing::get_service};
+// use tower::ServiceBuilder;
 use std::net::SocketAddr;
-use tower_http::services::ServeDir;
-use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+use tower_http::{
+    services::ServeDir,
+    // cors::{CorsLayer, Any},
+};
+// use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+// use tower_http::{compression::CompressionLayer, decompression::RequestDecompressionLayer};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -18,13 +23,24 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     //     )
     // });
 
+    // let cors = CorsLayer::new()
+    // .allow_origin(Any) // Replace `Any` with specific origins for production
+    // .allow_methods(Any)
+    // .allow_headers(Any);
 
     // Build the Axum app to create a router
     let app = Router::new()
+        // .route("/api", get(app::api::api))
+        // .layer(cors)
+        // .route("/", axum::routing::get(|| async { "Hello, World!" }))
+        // .layer(ServiceBuilder::new().layer(RequestDecompressionLayer::new()).layer(CompressionLayer::new()),)
         .fallback_service(static_service);
         // .fallback(fallback)
         // .nest_service("/", static_service);
         // .nest_service("/static", static_service);
+
+    println!("Hello, world!");
+    println!("Hi, world!");
 
     let host = [0, 0, 0, 0]; //allows external connections from host machine to all available interfaces
     //[127, 0, 0, 1]; for loopback address
@@ -41,7 +57,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     tracing_subscriber::fmt::init();
     tracing::event!(tracing::Level::INFO, "main");
 
-    println!("Server running at http://{}", addr);
+    println!("Backend Server running at http://{}", addr);
 
     // Run the server
     axum::serve(listener, app.into_make_service()).await?;

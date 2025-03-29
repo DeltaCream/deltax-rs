@@ -7,13 +7,89 @@
 # You can add other services your application may depend on here, such as a
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
+# services:
+#   server:
+#     build:
+#       context: .
+#       target: final
+#       args:
+#         APP_NAME: ${APP_NAME}
+#         APP_VERSION: ${APP_VERSION} # to be modified in a future version
+#     image: deltax
+#     ports:
+#       - 8080:8080
+#     volumes:
+#       - .:/usr/src/app
+#     # working_dir: /usr/src/app
+#     command: ["cargo", "run"]
+#     develop:
+#       watch:
+#         - action: sync
+#           path: .
+
 services:
-  server:
-    build:
-      context: .
-      target: final
-    ports:
-      - 8080:8080
+    backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        container_name: rust-backend
+        ports:
+            - "8080:8080"
+            # - DATABASE_URL=postgres://postgres:password@db:5432/mydatabase
+        environment:
+            - RUST_BACKTRACE=1
+        develop:
+            watch:
+                - action: sync+restart
+                  path: ./backend
+                  target: /app
+
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile.frontend
+        container_name: nextjs-frontend
+        ports:
+            - "3000:3000"
+        environment:
+        - NODE_ENV=development
+        - WATCHPACK_POLLING=true
+        volumes:
+            - ./frontend:/app
+            - /app/node_modules
+        command: ["npm", "run", "dev"]
+        depends_on:
+            - backend
+
+#     db:
+#         image: postgres:15
+#         container_name: postgres-db
+#         restart: always
+#         environment:
+#             POSTGRES_USER: postgres
+#             POSTGRES_PASSWORD: password
+#             POSTGRES_DB: mydatabase
+#         ports:
+#             - "5432:5432"
+#         volumes:
+#             - db-data:/var/lib/postgresql/data
+
+# volumes:
+#   db-data:
+
+# services:
+#   app:
+#     build:
+#       context: .
+#     container_name: "deltax"
+#     volumes:
+#       - .:/app
+#     ports:
+#       - "8080:8080"
+#     environment:
+#       - RUST_BACKTRACE=1
+#     # command: sh -c "cargo watch -x run"
+#     command: [cargo, watch, -x, run]
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to

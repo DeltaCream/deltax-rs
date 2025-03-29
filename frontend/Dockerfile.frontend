@@ -1,0 +1,52 @@
+# Use the official Node.js image as the base
+FROM node:22-alpine AS builder
+
+# Install necessary build tools
+# RUN apk add --no-cache python3 make g++ libc6-compat
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Install necessary build tools
+RUN apk add --no-cache libc6-compat
+
+# Copy package.json and install dependencies
+COPY package.json package-lock.json ./
+
+# Install all dependencies, including development dependencies
+RUN npm install --include=dev
+
+# Copy the rest of the application code
+COPY . .
+
+# Copy Tailwind and PostCSS configuration
+# COPY postcss.config.js ./
+
+# Build the Next.js application (use next dev build for production)
+RUN npm run build
+
+# Use a minimal base image for the final artifact (should match with the base image used in the builder stage)
+FROM node:22-alpine AS runtime
+
+# Install necessary runtime libraries
+# RUN apk add --no-cache libc6-compat
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the built application from the builder stage
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
+# Include package-lock.json
+COPY --from=builder /app/package-lock.json ./package-lock.json
+
+# Install only production dependencies
+RUN npm install
+
+# Expose the port the application runs on
+EXPOSE 3000
+
+# Set the command to run the application
+# CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]

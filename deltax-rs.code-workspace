@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../DeltaX/aerina-rs"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "deltax-rs"
+	}
+}
