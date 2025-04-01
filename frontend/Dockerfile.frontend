@@ -8,7 +8,8 @@ RUN corepack enable
 WORKDIR /app
 
 # Copy package.json and pnpm-lock.yaml for dependency installation (and .npmrc)
-COPY package.json pnpm-lock.yaml .npmrc ./
+# COPY package.json pnpm-lock.yaml .npmrc ./
+COPY package.json pnpm-lock.yaml ./
 
 # Install necessary build tools (system dependencies)
 RUN apk add --no-cache libc6-compat && pnpm install --frozen-lockfile

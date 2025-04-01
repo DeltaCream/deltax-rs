@@ -2,7 +2,7 @@
 
 # Declare APP_NAME and RUST_VERSION as build arguments and before any FROM instruction
 ARG APP_NAME=deltax
-ARG RUST_VERSION=1.85.0
+ARG RUST_VERSION=1.85.1
 
 ###############
 # Base Stage  #
