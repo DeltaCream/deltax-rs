@@ -1,26 +1,31 @@
 # Use the official Node.js image as the base
-FROM node:22-alpine AS builder
+FROM node:23-alpine AS builder
 
+ENV PNPM_HOME="/pnpm" \
+    PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 # Set the working directory inside the container
 WORKDIR /app
 
-# Install necessary build tools
-RUN apk add --no-cache libc6-compat
+# Copy package.json and pnpm-lock.yaml for dependency installation (and .npmrc)
+COPY package.json pnpm-lock.yaml .npmrc ./
 
-# Copy package.json and install dependencies
-COPY package.json package-lock.json ./
-
-# Install all dependencies, including development dependencies
-RUN npm install --include=dev
+# Install necessary build tools (system dependencies)
+RUN apk add --no-cache libc6-compat && pnpm install --frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .
 
 # Build the Next.js application (use next dev build for production)
-RUN npm run build
+RUN pnpm build
 
 # Use a minimal base image for the final artifact (should match with the base image used in the builder stage)
-FROM node:22-alpine AS runtime
+FROM node:23-alpine AS runtime
+
+# Set up PNPM again for runtime
+ENV PNPM_HOME="/pnpm" \
+    PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -28,16 +33,11 @@ WORKDIR /app
 # Copy the built application from the builder stage
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
-# Include package-lock.json
-COPY --from=builder /app/package-lock.json ./package-lock.json
-
-# Install only production dependencies
-RUN npm install --omit=dev
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./
 
 # Expose the port the application runs on
 EXPOSE 3000
 
 # Set the command to run the application
-# CMD ["npm", "start"]
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "dev"]

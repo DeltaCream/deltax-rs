@@ -75,3 +75,28 @@ dist/
 # Docker-specific
 .dockerignore
 docker-compose.override.yml
+
+# node_modules
+# .next
+# .env.local
+# npm-debug.log
+# yarn-error.log
+
+**/node_modules/*
+**/.pnpm-store
+**/.next
+
+node_modules
+.git
+.gitignore
+*.md
+dist
+
+target/
+.git/
+.vscode/
+node_modules/
+.next/
+
+db/password.txt
+backend/db/password.txt

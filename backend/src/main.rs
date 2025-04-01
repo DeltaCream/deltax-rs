@@ -9,6 +9,10 @@ use tower_http::{
 // use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 // use tower_http::{compression::CompressionLayer, decompression::RequestDecompressionLayer};
 
+// mod images;
+
+// use self::models::*;
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Hello, world!");
@@ -71,3 +75,16 @@ pub async fn fallback(uri: axum::http::Uri) -> impl axum::response::IntoResponse
         format!("No route for {}", uri),
     )
 }
+
+// use axum::{Json, extract::Extension};
+// use crate::db::get_all_image_urls;
+// use crate::models::Image;
+// use diesel::PgConnection;
+// use images::get_all_image_urls;
+
+// pub async fn fetch_images(
+//     Extension(conn): Extension<PgConnection>,
+// ) -> Json<Vec<String>> {
+//     let images = get_all_image_urls(&conn).unwrap_or_default();
+//     Json(images.into_iter().map(|img| img.url).collect())
+// }

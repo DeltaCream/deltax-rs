@@ -9,16 +9,28 @@ edition = "2024"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-axum = "0.8.1"
+axum = "0.8.3"
 # leptos = "0.7.8"
-tokio = { version = "1.42.0", features = ["full"] }
+tokio = { version = "1.44.1", features = ["full"] }
 tower = "0.5.2"
 tower-http = { version = "0.6.2", features = ["fs", "cors"] }
-tracing = "0.1.40" # Application-level tracing for Rust.
+tracing = "0.1.41" # Application-level tracing for Rust.
 # trunk = { version = "0.21.9", features = ["tailwindcss"] }
 
 # Utilities for implementing and composing `tracing` subscribers. 
-tracing-subscriber = { version = "0.3.18", features = ["env-filter"] } 
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] } 
+
+diesel = { version = "2.2.8", features = ["postgres"] }
+# build libpq and openssl as part of the build process
+# uncomment these lines if you run into setup issues
+# pq-sys = { version = "0.7.1", features = ["bundled"] }
+pq-sys = "0.7.1"
+openssl-sys = { version = "0.9.106", features = ["vendored"] } 
+# openssl-sys = "0.9.106"
+serde = { version = "1.0.219", features = ["derive"] }
+
+# dotenvy for environment variables
+dotenvy = "0.15.7"
 
 [[bin]]
 name = "deltax"
